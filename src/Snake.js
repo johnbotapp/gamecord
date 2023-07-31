@@ -1,6 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const { disableButtons, formatMessage, ButtonBuilder } = require('../utils/utils');
-const pluralize = require('pluralize');
 const events = require('events');
 const HEIGHT = 10;
 const WIDTH = 15;
@@ -146,7 +145,7 @@ module.exports = class SnakeGame extends events {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
-    .setDescription(`**Nombre de ${pluralize('point', this.score)} :** ${this.score}\n⚠️ *N'appuyez pas trop rapidement.*\n\n${this.getBoardContent()}`)
+    .setDescription(`${(this.options.embed.description).replaceAll('{{score}}', this.score)}\n\n${this.getBoardContent()}`)
 
     const up = new ButtonBuilder().setEmoji(emojis.up).setStyle('PRIMARY').setCustomId('snake_up');
     const down = new ButtonBuilder().setEmoji(emojis.down).setStyle('PRIMARY').setCustomId('snake_down');
@@ -174,7 +173,7 @@ module.exports = class SnakeGame extends events {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
-    .setDescription(`**Nombre de ${pluralize('point', this.score)} :** ${this.score}\n⚠️ *N'appuyez pas trop rapidement.*\n\n${this.getBoardContent()}`)
+    .setDescription(`${(this.options.embed.description).replaceAll('{{score}}', this.score)}\n\n${this.getBoardContent()}`)
 
     return msg.edit({ embeds: [embed] });
   }
@@ -188,7 +187,7 @@ module.exports = class SnakeGame extends events {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.overTitle)
-    .setDescription(`**Nombre de ${pluralize('point', this.score)} :** ${this.score}\n⚠️ *N'appuyez pas trop rapidement.*\n\n${this.getBoardContent(true)}`)
+    .setDescription(`${(this.options.embed.description).replaceAll('{{score}}', this.score)}\n\n${this.getBoardContent(true)}`)
 
     return msg.edit({ embeds: [embed], components: disableButtons(msg.components) });
   }
