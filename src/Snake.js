@@ -1,5 +1,6 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const { disableButtons, formatMessage, ButtonBuilder } = require('../utils/utils');
+const pluralize = require('pluralize');
 const events = require('events');
 const HEIGHT = 10;
 const WIDTH = 15;
@@ -145,9 +146,7 @@ module.exports = class SnakeGame extends events {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
-    .setDescription('**Score:** ' + this.score + '\n\n' + this.getBoardContent())
-    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
-
+    .setDescription(`**Nombre de ${pluralize('point', this.score)} :** ${this.score}\n⚠️ *N'appuyez pas trop rapidement.*\n\n${this.getBoardContent()}`)
 
     const up = new ButtonBuilder().setEmoji(emojis.up).setStyle('PRIMARY').setCustomId('snake_up');
     const down = new ButtonBuilder().setEmoji(emojis.down).setStyle('PRIMARY').setCustomId('snake_down');
@@ -155,8 +154,8 @@ module.exports = class SnakeGame extends events {
     const right = new ButtonBuilder().setEmoji(emojis.right).setStyle('PRIMARY').setCustomId('snake_right');
     const stop = new ButtonBuilder().setLabel(this.options.stopButton).setStyle('DANGER').setCustomId('snake_stop');
 
-    const dis1 = new ButtonBuilder().setLabel('\u200b').setStyle('SECONDARY').setCustomId('dis1').setDisabled(true);
-    const dis2 = new ButtonBuilder().setLabel('\u200b').setStyle('SECONDARY').setCustomId('dis2').setDisabled(true);
+    const dis1 = new ButtonBuilder().setLabel('\u200b').setStyle('PRIMARY').setCustomId('dis1').setDisabled(true);
+    const dis2 = new ButtonBuilder().setLabel('\u200b').setStyle('PRIMARY').setCustomId('dis2').setDisabled(true);
     const row1 = new ActionRowBuilder().addComponents(dis1, up, dis2, stop);
     const row2 = new ActionRowBuilder().addComponents(left, down, right);
 
@@ -175,8 +174,7 @@ module.exports = class SnakeGame extends events {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
-    .setDescription('**Score:** ' + this.score + '\n\n' + this.getBoardContent())
-    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
+    .setDescription(`**Nombre de ${pluralize('point', this.score)} :** ${this.score}\n⚠️ *N'appuyez pas trop rapidement.*\n\n${this.getBoardContent()}`)
 
     return msg.edit({ embeds: [embed] });
   }
@@ -190,8 +188,7 @@ module.exports = class SnakeGame extends events {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.overTitle)
-    .setDescription('**Score:** ' + this.score + '\n\n' + this.getBoardContent(true))
-    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
+    .setDescription(`**Nombre de ${pluralize('point', this.score)} :** ${this.score}\n⚠️ *N'appuyez pas trop rapidement.*\n\n${this.getBoardContent(true)}`)
 
     return msg.edit({ embeds: [embed], components: disableButtons(msg.components) });
   }
@@ -203,7 +200,7 @@ module.exports = class SnakeGame extends events {
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
       if (btn.user.id !== this.message.author.id) {
-        if (this.options.playerOnlyMessage) btn.followUp({ content: formatMessage(this.options, 'playerOnlyMessage'), ephemeral: true });
+        if (this.options.playerOnlyMessage) btn.followUp({ content: `🔴 **${btn.user.username}**, ${formatMessage(this.options, 'playerOnlyMessage')}`, ephemeral: true });
         return;
       }
 
