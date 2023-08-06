@@ -129,7 +129,7 @@ module.exports = class Connect4 extends approve {
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
       if (btn.user.id !== this.message.author.id && btn.user.id !== this.opponent.id) {
-        if (this.options.playerOnlyMessage) btn.followUp({ content: `🔴 **${btn.user.username}**, ${formatMessage(this.options, 'playerOnlyMessage')}`, ephemeral: true });
+        if (this.options.playerOnlyMessage) btn.followUp({ content: `${formatMessage(this.options, 'playerOnlyMessage', btn)}`, ephemeral: true });
         return;
       }
 

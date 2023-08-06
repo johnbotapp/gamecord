@@ -187,7 +187,7 @@ module.exports = class SnakeGame extends events {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.overTitle)
-    .setDescription(`${(this.options.embed.description).replaceAll('{{score}}', this.score)}\n\n${this.getBoardContent(true)}`)
+    .setDescription(`${(this.options.embed.description).replace('{score}', this.score)}\n\n${this.getBoardContent(true)}`)
 
     return msg.edit({ embeds: [embed], components: disableButtons(msg.components) });
   }
@@ -199,7 +199,7 @@ module.exports = class SnakeGame extends events {
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
       if (btn.user.id !== this.message.author.id) {
-        if (this.options.playerOnlyMessage) btn.followUp({ content: `🔴 **${btn.user.username}**, ${formatMessage(this.options, 'playerOnlyMessage')}`, ephemeral: true });
+        if (this.options.playerOnlyMessage) btn.followUp({ content: `${formatMessage(this.options, 'playerOnlyMessage', btn)}`, ephemeral: true });
         return;
       }
 
