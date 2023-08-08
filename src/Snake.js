@@ -145,7 +145,7 @@ module.exports = class SnakeGame extends events {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
-    .setDescription(`${(this.options.embed.description).replaceAll('{{score}}', this.score)}\n\n${this.getBoardContent()}`)
+    .setDescription(`${(this.options.embed.description).replaceAll('{score}', this.score)}\n\n${this.getBoardContent()}`)
 
     const up = new ButtonBuilder().setEmoji(emojis.up).setStyle('PRIMARY').setCustomId('snake_up');
     const down = new ButtonBuilder().setEmoji(emojis.down).setStyle('PRIMARY').setCustomId('snake_down');
@@ -173,7 +173,7 @@ module.exports = class SnakeGame extends events {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
-    .setDescription(`${(this.options.embed.description).replaceAll('{{score}}', this.score)}\n\n${this.getBoardContent()}`)
+    .setDescription(`${(this.options.embed.description).replaceAll('{score}', this.score)}\n\n${this.getBoardContent()}`)
 
     return msg.edit({ embeds: [embed] });
   }
