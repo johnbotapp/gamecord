@@ -66,7 +66,6 @@ module.exports = class Flood extends events {
     return board;
   }
 
-
   async sendMessage(content) {
     if (this.options.isSlashGame) return await this.message.editReply(content);
     else return await this.message.channel.send(content);
@@ -86,9 +85,8 @@ module.exports = class Flood extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(this.getBoardContent())
-    .addFields({ name: `${this.options.embed.fieldsTurns}`, value: `${this.turns}/${this.maxTurns}` })
-
-    if (this.options.embed.author) embed.setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
+    .addFields({ name: `${this.options.embed?.fieldsTurns ?? "Turns"}`, value: `${this.turns}/${this.maxTurns}` })
+    //.setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
     
     const btn1 = new ButtonBuilder().setStyle(this.options.buttonStyle).setEmoji(squares[0]).setCustomId('flood_0');
     const btn2 = new ButtonBuilder().setStyle(this.options.buttonStyle).setEmoji(squares[1]).setCustomId('flood_1');
@@ -117,9 +115,8 @@ module.exports = class Flood extends events {
       .setColor(this.options.embed.color)
       .setTitle(this.options.embed.title)
       .setDescription(this.getBoardContent())
-      .addFields({ name: `${this.options.embed.fieldsTurns}`, value: `${this.turns}/${this.maxTurns}` })
-
-      if (this.options.embed.author) embed.setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
+      .addFields({ name: `${this.options.embed?.fieldsTurns ?? "Turns"}`, value: `${this.turns}/${this.maxTurns}` })
+      //.setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
 
       return await msg.edit({ embeds: [embed], components: [row] });
     })
@@ -141,9 +138,8 @@ module.exports = class Flood extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(this.getBoardContent())
-    .addFields({ name: `${this.options.embed.fieldsTurns}`, value: GameOverMessage.replace('{turns}', this.turns) })
-
-    if (this.options.embed.author) embed.setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
+    .addFields({ name: `${this.options.embed?.fieldsTurns ?? "Turns"}`, value: GameOverMessage.replace('{turns}', this.turns) })
+    //.setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
 
     return msg.edit({ embeds: [embed], components: disableButtons(msg.components) });
   }
